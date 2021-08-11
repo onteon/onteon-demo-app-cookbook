@@ -5,8 +5,8 @@ import Footer from "../../containers/Footer/Footer";
 
 const LandingPage = () => (
     <>
-        <NavBar />
-        <Home id="#home" />
+        <NavBar transparent={true} />
+        <Home id="home" />
         <Footer />
     </>
 );

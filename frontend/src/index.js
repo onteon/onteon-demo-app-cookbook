@@ -4,11 +4,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import LandingPage from "./pages/LandingPage/LandingPage";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
+import SignPage from "./pages/SignPage/SignPage";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <LandingPage />
-  </React.StrictMode>,
+  <BrowserRouter>
+      <Switch>
+          <Route path="/sign">
+              <SignPage />
+          </Route>
+          <Route path="/">
+              <LandingPage />
+          </Route>
+      </Switch>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

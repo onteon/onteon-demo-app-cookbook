@@ -21,7 +21,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         final List<String> frontendUrls = List.of(
                 "/sign",
-                "/recipes"
+                "/recipes",
+                "/recipe/*"
         );
 
         frontendUrls.forEach(url -> registry.addViewController(url).setViewName("forward:/"));

@@ -13,7 +13,7 @@ const ContentCard = props => {
             padding: padding,
             height: "100%"
         }}>
-            <h1 style={{fontSize: "42px", color: "#ABA9A9"}}>{props.title}</h1>
+            <h1 style={{fontSize: props.titleFontSize ? props.titleFontSize : "42px", color: "#ABA9A9"}}>{props.title}</h1>
             <div style={{marginTop: "21px"}}>
                 {props.children}
             </div>

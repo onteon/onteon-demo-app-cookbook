@@ -8,20 +8,21 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 import SignPage from "./pages/SignPage/SignPage";
 import RecipesListPage from "./pages/RecipesListPage/RecipesListPage";
 import RecipePage from "./pages/RecipePage/RecipePage";
+import {CONTEXT_PATH} from "./properties";
 
 ReactDOM.render(
     <BrowserRouter>
         <Switch>
-            <Route path="/recipe/:id">
+            <Route path={`${CONTEXT_PATH}/recipe/:id`}>
                 <RecipePage/>
             </Route>
-            <Route path="/recipes">
+            <Route path={`${CONTEXT_PATH}/recipes`}>
                 <RecipesListPage/>
             </Route>
-            <Route path="/sign">
+            <Route path={`${CONTEXT_PATH}/sign`}>
                 <SignPage/>
             </Route>
-            <Route path="/">
+            <Route path={`${CONTEXT_PATH}/`}>
                 <LandingPage/>
             </Route>
         </Switch>

@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Col, Layout, Row} from "antd";
 
 import backgroundImage from '../../assets/images/background-1.jpg';
+import {CONTEXT_PATH} from "../../properties";
 
 const {Content} = Layout;
 
@@ -31,10 +32,24 @@ const Home = () => (
                     </p>
                     <Row style={{marginTop: "80px", paddingBottom: "30px"}} justify="center" gutter={24}>
                         <Col>
-                            <Button href="/sign#in" shape="round" size='large' style={buttonStyle}>Sign in</Button>
+                            <Button
+                                href={`${CONTEXT_PATH}/sign#in`}
+                                shape="round"
+                                size='large'
+                                style={buttonStyle}
+                            >
+                                Sign in
+                            </Button>
                         </Col>
                         <Col>
-                            <Button href="/sign#up" shape="round" size='large' style={buttonStyle}>Sign up</Button>
+                            <Button
+                                href={`${CONTEXT_PATH}/sign#up`}
+                                shape="round"
+                                size='large'
+                                style={buttonStyle}
+                            >
+                                Sign up
+                            </Button>
                         </Col>
                     </Row>
                 </Col>

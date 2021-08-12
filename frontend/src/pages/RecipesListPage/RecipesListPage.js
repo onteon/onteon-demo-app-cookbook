@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Card, Col, Dropdown, Layout, Menu, Row} from "antd";
+import {Button, Col, Layout, Row} from "antd";
 import NavBar from "../../components/NavBar/NavBar";
 import ContentCard from "../../components/ContentCard/ContentCard";
-import {MenuUnfoldOutlined} from '@ant-design/icons';
 import Footer from "../../containers/Footer/Footer";
+import RecipeSearchResultCard from "../../components/RecipeSearchResultCard/RecipeSearchResultCard";
 
 const {Content} = Layout;
 
@@ -47,46 +47,12 @@ const RecipesListPage = () => {
                                     recipes.length === 0
                                         ? <h1>Not found recipes</h1>
                                         : recipes.map(recipe => (
-                                            <Col>
-                                                <Card
-                                                    title={recipe.title}
-                                                    extra={
-                                                        <>
-                                                            <Button type="link" href={`/recipe/${recipe.id}`}>
-                                                                Open
-                                                            </Button>
-                                                            <Dropdown
-                                                                overlay={
-                                                                    <Menu>
-                                                                        <Menu.Item danger
-                                                                                   onClick={() => console.log("remove")}>
-                                                                            Remove
-                                                                        </Menu.Item>
-                                                                    </Menu>
-                                                                }
-                                                                trigger={['click']}
-                                                            >
-                                                                <Button
-                                                                    type="link"
-                                                                    className="ant-dropdown-link"
-                                                                    onClick={e => e.preventDefault()}
-                                                                    style={{paddingBottom: "4px"}}
-                                                                >
-                                                                    <MenuUnfoldOutlined/>
-                                                                </Button>
-                                                            </Dropdown>
-                                                        </>
-                                                    }
-                                                    style={{maxWidth: 500}}
-                                                >
-                                                    <div style={{
-                                                        height: "158px",
-                                                        overflow: "hidden"
-                                                    }}>
-                                                        {recipe.description}
-                                                    </div>
-                                                </Card>
-                                            </Col>
+                                            <RecipeSearchResultCard
+                                                id={recipe.id}
+                                                title={recipe.title}
+                                                description={recipe.description}
+                                                key={recipe.key}
+                                            />
                                         ))
                                 }
                             </Row>

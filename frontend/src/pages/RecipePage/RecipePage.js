@@ -1,9 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import {Checkbox, Col, Layout, Row} from "antd";
+import {Col, Layout, Row} from "antd";
 import NavBar from "../../components/NavBar/NavBar";
 import ContentCard from "../../components/ContentCard/ContentCard";
 import Footer from "../../containers/Footer/Footer";
+import foodImage from "../../assets/images/food/waffles.jpg"
+import ImageWithTitle from "../../components/ImageWithTitle/ImageWithTitle";
+import DescriptionContentCard from "../../components/DescriptionContentCard/DescriptionContentCard";
+import IngredientsContentCard from "../../components/IngredientsContentCard/IngredientsContentCard";
+import DirectionsContentCard from "../../components/DirectionsContentCard/DirectionsContentCard";
 
 const {Content} = Layout;
 
@@ -26,11 +31,11 @@ const dummyRecipe = {
         "Rozgrzać gofrownicę. Gofry piec przez około 3 - 3,5 minuty lub przez czas podany w instrukcji gofrownicy. Nakładamy ciasto chochlą i wypukłą stroną łyżki rozprowadzamy ciasto dokładnie po całej powierzchni.",
         "Gofry po upieczeniu odkładać na metalową kratkę. Posypać cukrem pudrem i polać syropem klonowym. Lub podawać z ulubionymi dodatkami np. marmoladą, dżemem, owocami i bitą śmietaną."
     ],
-    imageUrl: "/static/media/waffles.fc6c1c42.jpg"
+    imageUrl: foodImage
 }
 
 const RecipePage = () => {
-    const id = useParams();
+    const {id} = useParams();
     console.log(id);
     const [recipe, setRecipe] = useState();
 
@@ -46,71 +51,20 @@ const RecipePage = () => {
                     {
                         recipe ?
                             <>
-                                <Row
-                                    style={{
-                                        marginTop: "70px",
-                                        backgroundImage: `url("${recipe.imageUrl}")`,
-                                        backgroundPosition: "center",
-                                        backgroundRepeat: "no-repeat",
-                                        backgroundSize: "cover",
-                                        height: "500px"
-                                    }}
-                                    align="middle"
-                                >
-                                    <Col sm={24}>
-                                        <div
-                                            style={{
-                                                width: "100%",
-                                                backgroundColor: "rgba(0, 0, 0, 0.3)",
-                                                textAlign: "center"
-                                            }}
-                                        >
-                                            <h1 style={{color: "#f0f0f0", fontSize: "60px"}}>
-                                                {recipe.title}
-                                            </h1>
-                                        </div>
-                                    </Col>
-                                </Row>
+                                <ImageWithTitle imageUrl={recipe.imageUrl} title={recipe.title}/>
                                 <Row>
                                     <Col sm={24}>
                                         <Row>
                                             <Col sm={24} style={{padding: "0 24px 24px 24px"}}>
-                                                <ContentCard title="Description">
-                                                    <p style={{fontSize: "16px", fontStyle: "italic"}}>
-                                                        {recipe.description}
-                                                    </p>
-                                                </ContentCard>
+                                                <DescriptionContentCard description={recipe.description}/>
                                             </Col>
                                         </Row>
                                         <Row gutter={24} style={{padding: "24px"}}>
                                             <Col sm={6}>
-                                                <ContentCard title="Ingredients">
-                                                    {
-                                                        recipe.ingredients.map(ingredient =>
-                                                            <div>
-                                                                <Checkbox
-                                                                    style={{
-                                                                        fontSize: "16px",
-                                                                        fontWeight: "bold",
-                                                                        color: "#002766"
-                                                                    }}>
-                                                                    {ingredient}
-                                                                </Checkbox>
-                                                            </div>
-                                                        )
-                                                    }
-                                                </ContentCard>
+                                                <IngredientsContentCard ingredients={recipe.ingredients}/>
                                             </Col>
                                             <Col sm={18}>
-                                                <ContentCard title={"Directions"}>
-                                                    {
-                                                        recipe.directions.map(direction =>
-                                                            <ul>
-                                                                <li style={{fontSize: "18px"}}>{direction}</li>
-                                                            </ul>
-                                                        )
-                                                    }
-                                                </ContentCard>
+                                                <DirectionsContentCard directions={recipe.directions}/>
                                             </Col>
                                         </Row>
                                     </Col>

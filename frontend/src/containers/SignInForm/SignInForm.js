@@ -6,7 +6,7 @@ const SignInForm = () => (
         <Col>
             <h1>Sign in</h1>
             <Form
-                name="basic"
+                name="signInForm"
                 labelCol={{span: 8}}
                 wrapperCol={{span: 16}}
                 initialValues={{remember: true}}

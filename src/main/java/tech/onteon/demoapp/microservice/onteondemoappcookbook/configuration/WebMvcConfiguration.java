@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.List;
+
 /**
  * @author Patryk Borchowiec
  * @since 0.0.0
@@ -17,6 +19,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfiguration implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/sign").setViewName("forward:/");
+        final List<String> frontendUrls = List.of(
+                "/sign",
+                "/recipes"
+        );
+
+        frontendUrls.forEach(url -> registry.addViewController(url).setViewName("forward:/"));
     }
 }

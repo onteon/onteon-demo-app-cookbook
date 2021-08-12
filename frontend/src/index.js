@@ -6,10 +6,14 @@ import reportWebVitals from './reportWebVitals';
 import LandingPage from "./pages/LandingPage/LandingPage";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import SignPage from "./pages/SignPage/SignPage";
+import RecipesListPage from "./pages/Recipe/RecipesListPage";
 
 ReactDOM.render(
   <BrowserRouter>
       <Switch>
+          <Route path="/recipes">
+              <RecipesListPage />
+          </Route>
           <Route path="/sign">
               <SignPage />
           </Route>

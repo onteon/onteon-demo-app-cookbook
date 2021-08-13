@@ -8,6 +8,7 @@ package tech.onteon.demoapp.microservice.onteondemoappcookbook.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.request.AddUserRequest;
+import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.response.UserResponse;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.converter.UserConverter;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.interfaces.UserService;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.NewUserTO;
@@ -40,7 +41,7 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    private String getPrincipal(final Principal principal) {
-        return principal.getName();
+    private UserResponse getPrincipal(final Principal principal) {
+        return userConverter.toUserResponse(userService.getPrincipal(principal));
     }
 }

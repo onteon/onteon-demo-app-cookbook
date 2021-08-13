@@ -7,6 +7,9 @@ package tech.onteon.demoapp.microservice.onteondemoappcookbook.service.interface
 
 import lombok.NonNull;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.NewUserTO;
+import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.UserTO;
+
+import java.security.Principal;
 
 /**
  * @author Patryk Borchowiec
@@ -14,4 +17,6 @@ import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.NewUser
  */
 public interface UserService {
     void saveUser(@NonNull final NewUserTO newUserTO);
+
+    UserTO getPrincipal(final Principal principal);
 }

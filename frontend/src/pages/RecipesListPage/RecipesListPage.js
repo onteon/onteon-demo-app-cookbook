@@ -5,6 +5,7 @@ import ContentCard from "../../components/ContentCard/ContentCard";
 import Footer from "../../containers/Footer/Footer";
 import RecipeSearchResultCard from "../../components/RecipeSearchResultCard/RecipeSearchResultCard";
 import {getUserRecipes} from "../../remote/RecipeRemoteService";
+import {getPrincipal} from "../../remote/UserRemoteService";
 
 const {Content} = Layout;
 const PAGE_SIZE = 6;
@@ -13,6 +14,12 @@ const RecipesListPage = () => {
     const [recipes, setRecipes] = useState([])
     const [currentPage, setCurrentPage] = useState(0)
     const [hasMorePages, setHasMorePages] = useState(true)
+    const [principal, setPrincipal] = useState();
+
+    useEffect(() => {
+        getPrincipal()
+            .then(response => setPrincipal(response.data))
+    }, []);
 
     function getNextPage() {
         getUserRecipes(currentPage + 1, PAGE_SIZE)
@@ -29,7 +36,7 @@ const RecipesListPage = () => {
 
     return (
         <Layout>
-            <NavBar transparent={false}/>
+            <NavBar transparent={false} principal={principal}/>
             <Content>
                 <Row style={{marginTop: "125px", minHeight: "100vh"}}>
                     <Col sm={24}>

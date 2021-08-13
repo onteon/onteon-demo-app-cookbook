@@ -1,4 +1,5 @@
 import React from 'react';
+import {ONTEON_URL} from "../../properties";
 
 const LandingPage = () => (
     <div style={{
@@ -8,7 +9,7 @@ const LandingPage = () => (
         fontSize: "16px"
     }}>
         <p style={{color: "#8c8c8c", margin: 0}}>
-            Designed by <a href="https://onteon.com" style={{color: "#8c8c8c", fontWeight: 800}}>Onteon</a>
+            Designed by <a href={ONTEON_URL} style={{color: "#8c8c8c", fontWeight: 800}}>Onteon</a>
         </p>
     </div>
 );

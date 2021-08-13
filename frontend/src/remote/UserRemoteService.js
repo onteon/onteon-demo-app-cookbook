@@ -8,3 +8,7 @@ export function signUp(username, password, confirmedPassword) {
         confirmedPassword: confirmedPassword
     });
 }
+
+export function getPrincipal() {
+    return axios.get(`${API_BASE_URL}/api/user/me`);
+}

@@ -10,12 +10,19 @@ import IngredientsContentCard from "../../components/IngredientsContentCard/Ingr
 import DirectionsContentCard from "../../components/DirectionsContentCard/DirectionsContentCard";
 import {getRecipeById} from "../../remote/RecipeRemoteService";
 import {CONTEXT_PATH} from "../../properties";
+import {getPrincipal} from "../../remote/UserRemoteService";
 
 const {Content} = Layout;
 
 const RecipePage = () => {
     const {id} = useParams();
     const [recipe, setRecipe] = useState();
+    const [principal, setPrincipal] = useState();
+
+    useEffect(() => {
+        getPrincipal()
+            .then(response => setPrincipal(response.data))
+    }, []);
 
     useEffect(() => {
         getRecipeById(id)
@@ -26,7 +33,7 @@ const RecipePage = () => {
     return (
         <>
             <Layout style={{padding: "0 100px", minHeight: "100vh"}}>
-                <NavBar transparent={false}/>
+                <NavBar transparent={false} principal={principal}/>
                 <Content>
                     {
                         recipe ?

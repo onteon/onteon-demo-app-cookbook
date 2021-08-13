@@ -5,11 +5,20 @@
  */
 package tech.onteon.demoapp.microservice.onteondemoappcookbook.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author Patryk Borchowiec
@@ -21,10 +30,40 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
+                .csrf().disable().cors().and()
                 .authorizeRequests()
-                    .antMatchers(HttpMethod.GET, "/**")
-                        .permitAll()
-                .and().formLogin()
+                    .antMatchers(HttpMethod.GET, "/", "/sign", "/recipes", "/recipe/*", "/static/**")
+                    .permitAll()
+                    .antMatchers(HttpMethod.POST, "/api/user", "/api/login")
+                    .permitAll()
+                    .antMatchers("/h2-console/**")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated()
+                .and()
+                    .formLogin()
+                    .loginProcessingUrl("/api/login")
+                    .loginPage("/sign#in")
+                    .defaultSuccessUrl("/recipes")
+                    .usernameParameter("username")
+                    .passwordParameter("password")
                     .permitAll();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        final CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.setAllowedOriginPatterns(Collections.singletonList("*"));
+        config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Cookie", "Access-Control-Allow-Origin"));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
     }
 }

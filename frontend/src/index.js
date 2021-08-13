@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import LandingPage from "./pages/LandingPage/LandingPage";
-import {BrowserRouter, Switch, Route} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import SignPage from "./pages/SignPage/SignPage";
 import RecipesListPage from "./pages/RecipesListPage/RecipesListPage";
 import RecipePage from "./pages/RecipePage/RecipePage";

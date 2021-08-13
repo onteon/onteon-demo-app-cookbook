@@ -6,7 +6,6 @@ const SignInForm = () => {
     const [globalErrorMessages, setGlobalErrorMessages] = useState([]);
 
     function addNewUser(values) {
-        console.log(values)
         const {username, password, confirmPassword} = values;
         signUp(username, password, confirmPassword)
             .then(response => {

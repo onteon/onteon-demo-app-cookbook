@@ -6,7 +6,7 @@
 package tech.onteon.demoapp.microservice.onteondemoappcookbook.converter;
 
 import org.springframework.stereotype.Component;
-import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.pojo.AddUserRequest;
+import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.request.AddUserRequest;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.NewUserTO;
 
 import java.util.Optional;

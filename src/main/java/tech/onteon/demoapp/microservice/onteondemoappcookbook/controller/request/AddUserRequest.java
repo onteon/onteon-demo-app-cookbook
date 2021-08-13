@@ -3,7 +3,7 @@
  *  All rights reserved.
  *  Use is subject to license terms.
  */
-package tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.pojo;
+package tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.request;
 
 import lombok.Data;
 

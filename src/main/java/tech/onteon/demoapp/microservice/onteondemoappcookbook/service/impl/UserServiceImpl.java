@@ -11,9 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.UserRepository;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.entity.UserEntity;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.entity.UserRole;
+import tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.interfaces.UserRepository;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.interfaces.UserService;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.NewUserTO;
 
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         final UserEntity userEntity = new UserEntity();
         userEntity.setUsername(newUserTO.getUsername());
         userEntity.setPassword(encodedPassword);
-        userEntity.setRole(UserRole.USER_ROLE);
+        userEntity.setRole(UserRole.ROLE_USER);
 
         userRepository.save(userEntity);
     }

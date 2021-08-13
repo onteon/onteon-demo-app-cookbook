@@ -7,7 +7,7 @@ package tech.onteon.demoapp.microservice.onteondemoappcookbook.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.pojo.AddUserRequest;
+import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.request.AddUserRequest;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.converter.UserConverter;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.interfaces.UserService;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.NewUserTO;

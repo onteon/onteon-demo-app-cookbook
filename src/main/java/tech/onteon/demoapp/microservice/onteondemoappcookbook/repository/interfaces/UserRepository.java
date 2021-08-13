@@ -3,7 +3,7 @@
  *  All rights reserved.
  *  Use is subject to license terms.
  */
-package tech.onteon.demoapp.microservice.onteondemoappcookbook.repository;
+package tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.interfaces;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.entity.UserEntity;

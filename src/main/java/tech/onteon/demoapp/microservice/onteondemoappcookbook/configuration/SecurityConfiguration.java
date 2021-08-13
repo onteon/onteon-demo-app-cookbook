@@ -20,6 +20,9 @@ import org.springframework.web.filter.CorsFilter;
 import java.util.Arrays;
 import java.util.Collections;
 
+import static tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.entity.UserRole.ROLE_ADMIN;
+import static tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.entity.UserRole.ROLE_USER;
+
 /**
  * @author Patryk Borchowiec
  * @since 0.0.0
@@ -32,13 +35,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable().cors().and()
                 .authorizeRequests()
-                    .antMatchers(HttpMethod.GET, "/", "/sign", "/recipes", "/recipe/*", "/static/**")
+                    .antMatchers(HttpMethod.GET, "/", "/sign", "/static/**")
                     .permitAll()
                     .antMatchers(HttpMethod.POST, "/api/user", "/api/login")
                     .permitAll()
                     .antMatchers("/h2-console/**")
-                    .permitAll()
-                    .anyRequest()
+                    .hasRole(ROLE_ADMIN.getRoleName())
+                    .antMatchers("/api/recipe", "/api/recipe/user/me", "/images/**")
+                    .hasAnyRole(ROLE_USER.getRoleName(), ROLE_ADMIN.getRoleName())
+                    .antMatchers(HttpMethod.GET, "/recipes", "/recipe/*")
+                    .hasAnyRole(ROLE_USER.getRoleName(), ROLE_ADMIN.getRoleName())
+                .anyRequest()
                     .authenticated()
                 .and()
                     .formLogin()

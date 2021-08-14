@@ -45,6 +45,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .hasAnyRole(ROLE_USER.getRoleName(), ROLE_ADMIN.getRoleName())
                     .antMatchers(HttpMethod.GET, "/recipes", "/recipe/*")
                     .hasAnyRole(ROLE_USER.getRoleName(), ROLE_ADMIN.getRoleName())
+                    .antMatchers(HttpMethod.DELETE, "/recipe/*")
+                    .hasAnyRole(ROLE_USER.getRoleName(), ROLE_ADMIN.getRoleName())
                 .anyRequest()
                     .authenticated()
                 .and()

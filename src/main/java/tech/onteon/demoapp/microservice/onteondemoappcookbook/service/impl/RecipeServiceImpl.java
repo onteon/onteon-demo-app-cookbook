@@ -107,7 +107,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public RecipeTO getRecipeById(@NotNull final Principal principal, @NotNull final int recipeId) {
-        userRepository.findByUsername(principal.getName())
+        final UserEntity principalEntity = userRepository.findByUsername(principal.getName())
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.UNAUTHORIZED,
                         String.format("Not found user of username '%s'", principal.getName())
@@ -119,6 +119,37 @@ public class RecipeServiceImpl implements RecipeService {
                         String.format("Not found recipe by id '%d'", recipeId)
                 ));
 
+        if (recipeEntity.getAuthor().getId() != principalEntity.getId()) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    String.format("Not a owner of recipe of id '%d'", recipeId)
+            );
+        }
+
         return recipeConverter.toRecipeTO(recipeEntity);
+    }
+
+    @Override
+    public void deleteRecipeById(@NotNull final Principal principal, final int recipeId) {
+        final UserEntity principalEntity = userRepository.findByUsername(principal.getName())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.UNAUTHORIZED,
+                        String.format("Not found user of username '%s'", principal.getName())
+                ));
+
+        final RecipeEntity recipeEntity = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        String.format("Not found recipe by id '%d'", recipeId)
+                ));
+
+        if (recipeEntity.getAuthor().getId() != principalEntity.getId()) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    String.format("Not a owner of recipe of id '%d'", recipeId)
+            );
+        }
+
+        recipeRepository.delete(recipeEntity);
     }
 }

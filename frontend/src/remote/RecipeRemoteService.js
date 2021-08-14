@@ -8,3 +8,7 @@ export function getUserRecipes(page, pageSize) {
 export function getRecipeById(recipeId) {
     return axios.get(`${API_BASE_URL}/api/recipe/${recipeId}`);
 }
+
+export function deleteById(recipeId) {
+    return axios.delete(`${API_BASE_URL}/api/recipe/${recipeId}`);
+}

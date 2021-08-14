@@ -26,4 +26,6 @@ public interface RecipeService {
     Page<RecipeTO> getPrincipalRecipes(@NotNull final Principal principal, final int page, final int pageSize);
 
     RecipeTO getRecipeById(@NotNull final Principal principal, final int recipeId);
+
+    void deleteRecipeById(@NotNull final Principal principal, final int recipeId);
 }

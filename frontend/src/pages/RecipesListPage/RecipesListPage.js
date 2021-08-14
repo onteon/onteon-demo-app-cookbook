@@ -34,6 +34,10 @@ const RecipesListPage = () => {
 
     useEffect(() => getNextPage(), []);
 
+    function deleteRecipe(recipeId) {
+        setRecipes(recipes.filter(recipe => recipe.id !== recipeId));
+    }
+
     return (
         <Layout>
             <NavBar transparent={false} principal={principal}/>
@@ -51,6 +55,7 @@ const RecipesListPage = () => {
                                                 title={recipe.title}
                                                 description={recipe.description}
                                                 key={recipe.key}
+                                                deleteFunction={deleteRecipe}
                                             />
                                         ))
                                 }

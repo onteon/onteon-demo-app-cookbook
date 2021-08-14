@@ -7,8 +7,6 @@ import onteonLogoWhite from "../../assets/images/onteon-logo-white.svg";
 const NavBar = props => {
     const {transparent, principal} = props;
 
-    console.log(principal);
-
     const brandStyle = {
         color: "#fff"
     }

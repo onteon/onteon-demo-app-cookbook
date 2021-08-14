@@ -64,4 +64,9 @@ public class RecipeController {
     public RecipeResponse getRecipeById(final Principal principal, @PathVariable final int recipeId) {
         return recipeConverter.toRecipeResponse(recipeService.getRecipeById(principal, recipeId));
     }
+
+    @DeleteMapping("/{recipeId}")
+    public void deleteRecipeById(final Principal principal, @PathVariable final int recipeId) {
+        recipeService.deleteRecipeById(principal, recipeId);
+    }
 }

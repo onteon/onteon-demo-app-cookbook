@@ -42,6 +42,12 @@ const NavBar = props => {
                                         <span style={{fontWeight: "bold"}}>Hello {principal.username}!</span>
                                     </Nav.Link>
                                     <Nav.Link
+                                        href={`${CONTEXT_PATH}/add-recipe`}
+                                        style={transparent ? linkStyle : {}}
+                                    >
+                                        Add recipe
+                                    </Nav.Link>
+                                    <Nav.Link
                                         href={`${CONTEXT_PATH}/recipes`}
                                         style={transparent ? linkStyle : {}}
                                     >

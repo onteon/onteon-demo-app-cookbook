@@ -12,3 +12,30 @@ export function getRecipeById(recipeId) {
 export function deleteById(recipeId) {
     return axios.delete(`${API_BASE_URL}/api/recipe/${recipeId}`);
 }
+
+export function addRecipe(title, description, ingredients, directions, image) {
+    const formData = new FormData();
+
+    const imageFile = document.getElementById("imageInput");
+
+    formData.append("image", imageFile.files[0]);
+    formData.append('data', new Blob([JSON.stringify({
+        title: title,
+        description: description,
+        ingredients: ingredients,
+        directions: directions
+    })], {
+        type: "application/json"
+    }));
+
+
+    return axios.post(
+        `${API_BASE_URL}/api/recipe`,
+        formData,
+        {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        }
+    );
+}

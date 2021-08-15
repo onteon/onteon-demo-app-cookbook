@@ -9,12 +9,16 @@ import SignPage from "./pages/SignPage/SignPage";
 import RecipesListPage from "./pages/RecipesListPage/RecipesListPage";
 import RecipePage from "./pages/RecipePage/RecipePage";
 import {CONTEXT_PATH} from "./properties";
+import AddRecipePage from "./pages/AddRecipePage/AddRecipePage";
 
 ReactDOM.render(
     <BrowserRouter>
         <Switch>
             <Route path={`${CONTEXT_PATH}/recipe/:id`}>
                 <RecipePage/>
+            </Route>
+            <Route path={`${CONTEXT_PATH}/add-recipe`}>
+                <AddRecipePage/>
             </Route>
             <Route path={`${CONTEXT_PATH}/recipes`}>
                 <RecipesListPage/>

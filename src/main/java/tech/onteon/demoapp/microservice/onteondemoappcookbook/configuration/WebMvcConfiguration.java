@@ -25,7 +25,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                 "/recipes",
                 "/recipe/*",
                 "/add-recipe",
-                "/edit-recipe/*"
+                "/edit-recipe/*",
+                "/error-page"
         );
         frontendUrls.forEach(url -> registry.addViewController(url).setViewName("forward:/"));
     }

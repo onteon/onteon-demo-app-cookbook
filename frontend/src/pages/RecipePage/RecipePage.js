@@ -9,8 +9,8 @@ import DescriptionContentCard from "../../components/DescriptionContentCard/Desc
 import IngredientsContentCard from "../../components/IngredientsContentCard/IngredientsContentCard";
 import DirectionsContentCard from "../../components/DirectionsContentCard/DirectionsContentCard";
 import {getRecipeById} from "../../remote/RecipeRemoteService";
-import {CONTEXT_PATH} from "../../properties";
 import {getPrincipal} from "../../remote/UserRemoteService";
+import {redirectError} from "../../utils/RedirectUtils";
 
 const {Content} = Layout;
 
@@ -27,7 +27,7 @@ const RecipePage = () => {
     useEffect(() => {
         getRecipeById(id)
             .then(response => setRecipe(response.data))
-            .catch(error => window.open(`${CONTEXT_PATH}/recipes`)); // todo redirect to proper error page (404, 403, 401 etc)
+            .catch(error => redirectError(error));
     }, [id]);
 
     return (
@@ -57,8 +57,7 @@ const RecipePage = () => {
                                     </Col>
                                 </Row>
                             </>
-                            :
-                            <ContentCard title="Loading..."/>
+                            : <div style={{marginTop: "100px"}}><ContentCard title="Loading..."/></div>
                     }
                 </Content>
             </Layout>

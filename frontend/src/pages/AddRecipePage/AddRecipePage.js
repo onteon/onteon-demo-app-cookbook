@@ -6,13 +6,13 @@ import Footer from "../../containers/Footer/Footer";
 
 import {getPrincipal} from "../../remote/UserRemoteService";
 import {addRecipe} from "../../remote/RecipeRemoteService";
-import {CONTEXT_PATH} from "../../properties";
 import BasicDataFormItemsContentCard
     from "../../components/BasicDataFormItemsContentCard/BasicDataFromItemsContentCard";
 import IngredientsFormItemsContentCard
     from "../../components/IngredientsFormItemsContentCard/IngredientsFormItemsContentCard";
 import DirectionsFormItemsContentCard
     from "../../components/DirectionsFormItemsContentCard/DirectionsFormItemsContentCard";
+import {redirect} from "../../utils/RedirectUtils";
 
 const {Content} = Layout;
 
@@ -28,7 +28,7 @@ const AddRecipePage = () => {
     function onFinishAddRecipe(data) {
         const {title, description, ingredients, directions} = data;
         addRecipe(title, description, ingredients, directions, image)
-            .then(response => window.open(`${CONTEXT_PATH}/recipe/${response.data.recipeId}`, "_self"))
+            .then(response => redirect(`/recipe/${response.data.recipeId}`))
             .catch(error => console.error(error.response))
     }
 

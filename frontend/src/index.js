@@ -11,6 +11,7 @@ import RecipePage from "./pages/RecipePage/RecipePage";
 import {CONTEXT_PATH} from "./properties";
 import AddRecipePage from "./pages/AddRecipePage/AddRecipePage";
 import EditRecipePage from "./pages/EditRecipePage/EditRecipePage";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 
 ReactDOM.render(
     <BrowserRouter>
@@ -23,6 +24,9 @@ ReactDOM.render(
             </Route>
             <Route path={`${CONTEXT_PATH}/add-recipe`}>
                 <AddRecipePage/>
+            </Route>
+            <Route path={`${CONTEXT_PATH}/error-page`}>
+                <ErrorPage/>
             </Route>
             <Route path={`${CONTEXT_PATH}/recipes`}>
                 <RecipesListPage/>

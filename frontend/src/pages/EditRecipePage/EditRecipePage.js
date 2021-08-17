@@ -4,7 +4,6 @@ import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../containers/Footer/Footer";
 
 import {getPrincipal} from "../../remote/UserRemoteService";
-import {CONTEXT_PATH} from "../../properties";
 import BasicDataFormItemsContentCard
     from "../../components/BasicDataFormItemsContentCard/BasicDataFromItemsContentCard";
 import IngredientsFormItemsContentCard
@@ -14,6 +13,7 @@ import DirectionsFormItemsContentCard
 import {useParams} from "react-router-dom";
 import ContentCard from "../../components/ContentCard/ContentCard";
 import {getRecipeById, updateRecipe} from "../../remote/RecipeRemoteService";
+import {redirect, redirectError} from "../../utils/RedirectUtils";
 
 const {Content} = Layout;
 
@@ -31,13 +31,13 @@ const EditRecipePage = () => {
     useEffect(() => {
         getRecipeById(id)
             .then(response => setRecipe(response.data))
-            .catch(error => window.open(`${CONTEXT_PATH}/recipes`));
+            .catch(error => redirectError(error));
     }, [id]);
 
     function onFinishUpdateRecipe(data) {
         const {title, description, ingredients, directions} = data;
         updateRecipe(id, title, description, ingredients, directions, image)
-            .then(response => window.open(`${CONTEXT_PATH}/recipe/${id}`, "_self"))
+            .then(response => redirect(`/recipe/${id}`))
             .catch(error => console.error(error.response))
     }
 

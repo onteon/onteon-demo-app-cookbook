@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Col, Form, Input, Row} from "antd";
 import {signUp} from "../../remote/UserRemoteService";
+import {redirect} from "../../utils/RedirectUtils";
 
 const SignInForm = () => {
     const [globalErrorMessages, setGlobalErrorMessages] = useState([]);
@@ -10,7 +11,7 @@ const SignInForm = () => {
         signUp(username, password, confirmPassword)
             .then(response => {
                 setGlobalErrorMessages([]);
-                window.open(`/cookbook/sign#in`, "_self")
+                redirect("/sign#in");
             })
             .catch(error => {
                 setGlobalErrorMessages([error.response.data.message])
@@ -36,7 +37,7 @@ const SignInForm = () => {
                         label="Username"
                         name="username"
                         rules={[{required: true, message: 'Please input your username!'}]}
-                        labelCol={{offset:0, span: 9}}
+                        labelCol={{offset: 0, span: 9}}
                     >
                         <Input/>
                     </Form.Item>
@@ -45,7 +46,7 @@ const SignInForm = () => {
                         label="Password"
                         name="password"
                         rules={[{required: true, message: 'Please input your password!'}]}
-                        labelCol={{offset:0, span: 9}}
+                        labelCol={{offset: 0, span: 9}}
                     >
                         <Input.Password/>
                     </Form.Item>
@@ -54,7 +55,7 @@ const SignInForm = () => {
                         label="Confirm password"
                         name="confirmPassword"
                         rules={[{required: true, message: 'Please confirm your password!'}]}
-                        labelCol={{offset:0, span: 9}}
+                        labelCol={{offset: 0, span: 9}}
                     >
                         <Input.Password/>
                     </Form.Item>

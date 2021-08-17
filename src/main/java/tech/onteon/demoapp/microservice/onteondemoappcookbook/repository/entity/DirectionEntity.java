@@ -7,6 +7,7 @@ package tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.entity
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,5 +23,6 @@ public class DirectionEntity {
     @GeneratedValue
     private int id;
 
+    @Column(length = 1024)
     private String direction;
 }

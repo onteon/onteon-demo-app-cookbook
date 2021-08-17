@@ -25,6 +25,7 @@ import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Spliterator;
@@ -55,6 +56,11 @@ public class DataConfiguration {
     @Value("classpath:dummy/data/usernames.json")
     private Resource usernamesResource;
 
+    @Value("classpath:dummy/data/recipes.json")
+    private Resource recipesResource;
+
+    private final ResourceLoader resourceLoader;
+
     private final UserRepository userRepository;
 
     private final ImageRepository imageRepository;
@@ -67,16 +73,13 @@ public class DataConfiguration {
 
     private final Random random;
 
-    private final List<String> imagesNames = List.of(
-            "dumplings.jpg", "hamburger.jpg", "pizza2.jpg", "pizza.jpg", "waffles.jpg"
-    );
-
     public DataConfiguration(
             @Autowired final UserRepository userRepository,
             @Autowired final ImageRepository imageRepository,
             @Autowired final RecipeRepository recipeRepository,
             @Autowired final PasswordEncoder passwordEncoder
     ) {
+        this.resourceLoader = new DefaultResourceLoader();
         this.userRepository = userRepository;
         this.imageRepository = imageRepository;
         this.recipeRepository = recipeRepository;
@@ -88,8 +91,14 @@ public class DataConfiguration {
     @PostConstruct
     private void putDummyData() throws IOException {
         final List<UserEntity> users = putUsers(usersMin, usersMax);
+
+        final Spliterator<JsonNode> recipesJsonSpliterator = objectMapper.readTree(recipesResource.getInputStream())
+                .spliterator();
+        final List<JsonNode> recipes = StreamSupport.stream(recipesJsonSpliterator, false)
+                .collect(Collectors.toList());
+
         for (UserEntity user : users) {
-            addRecipes(user, recipesPerUserMin, recipesPerUserMax);
+            addRecipes(user, recipesPerUserMin, recipesPerUserMax, new LinkedList<>(recipes));
         }
 
         System.out.println("Created users");
@@ -129,39 +138,49 @@ public class DataConfiguration {
         userRepository.save(userEntity);
     }
 
-    private void addRecipes(@NotNull final UserEntity author, final int min, final int max) throws IOException {
+    private void addRecipes(
+            @NotNull final UserEntity author,
+            final int min,
+            final int max,
+            @NotNull final List<JsonNode> jsonRecipes
+    ) throws IOException {
         final int numberOfRecipes = random.nextInt(max - min) + min;
-        final ResourceLoader resourceLoader = new DefaultResourceLoader();
 
         for (int i = 0; i < numberOfRecipes; i++) {
-            final String imageName = imagesNames.get(random.nextInt(imagesNames.size()));
-            final Resource resource = resourceLoader.getResource(String.format("classpath:dummy/images/%s", imageName));
+            final JsonNode recipeJson = jsonRecipes.remove(random.nextInt(jsonRecipes.size()));
 
-            final String imageFileName = imageRepository.save(getDummyMultipartFile(resource));
+            final String imageFileName = recipeJson.get("imageName").asText();
+            final Resource imageResource = resourceLoader
+                    .getResource(String.format("classpath:dummy/images/%s", imageFileName));
+
+            final String newImageFileName = imageRepository.save(getDummyMultipartFile(imageResource));
 
             final RecipeEntity recipeEntity = new RecipeEntity();
-            recipeEntity.setTitle("Title " + i);
-            recipeEntity.setIngredients(
-                    List.of("ingredient 1", "ingredient 2", "ingredient 3").stream()
-                            .map(ingredient -> {
-                                final IngredientEntity ingredientEntity = new IngredientEntity();
-                                ingredientEntity.setIngredient(ingredient);
-                                return ingredientEntity;
-                            })
-                            .collect(Collectors.toList())
-            );
-            recipeEntity.setDirections(
-                    List.of("First of all, do this", "and then this", "and this", "I guess you can eat now").stream()
-                            .map(direction -> {
-                                final DirectionEntity directionEntity = new DirectionEntity();
-                                directionEntity.setDirection(direction);
-                                return directionEntity;
-                            })
-                            .collect(Collectors.toList())
-            );
+            recipeEntity.setTitle(recipeJson.get("title").asText());
+
+            final Spliterator<JsonNode> ingredientsSpliterator = recipeJson.get("ingredients").spliterator();
+            List<IngredientEntity> ingredients = StreamSupport.stream(ingredientsSpliterator, false)
+                    .map(ingredientJson -> {
+                        final IngredientEntity ingredientEntity = new IngredientEntity();
+                        ingredientEntity.setIngredient(ingredientJson.asText());
+                        return ingredientEntity;
+                    })
+                    .collect(Collectors.toList());
+            recipeEntity.setIngredients(ingredients);
+
+            final Spliterator<JsonNode> directionsSpliterator = recipeJson.get("directions").spliterator();
+            List<DirectionEntity> directions = StreamSupport.stream(directionsSpliterator, false)
+                    .map(directionJson -> {
+                        final DirectionEntity ingredientEntity = new DirectionEntity();
+                        ingredientEntity.setDirection(directionJson.asText());
+                        return ingredientEntity;
+                    })
+                    .collect(Collectors.toList());
+            recipeEntity.setDirections(directions);
+
             recipeEntity.setAuthor(author);
-            recipeEntity.setDescription("rem ipsum dolor sit amet, consectetur adipiscing elit. Integer quis risus purus. In fringilla lectus quis lectus vehicula fringilla. Proin ultricies facilisis leo vel lobortis. Phasellus a bibendum tellus. Donec fermentum condimentum pellentesque. Vestibulum tristique mauris nisi, vel tempus enim venenatis ut.");
-            recipeEntity.setImageFileName(imageFileName);
+            recipeEntity.setDescription(recipeJson.get("description").asText());
+            recipeEntity.setImageFileName(newImageFileName);
 
             recipeRepository.save(recipeEntity);
         }

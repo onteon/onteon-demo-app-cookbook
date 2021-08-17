@@ -9,7 +9,7 @@ const LandingPage = () => (
         fontSize: "16px"
     }}>
         <p style={{color: "#8c8c8c", margin: 0}}>
-            Designed by <a href={ONTEON_URL} style={{color: "#8c8c8c", fontWeight: 800}}>Onteon</a>
+            Designed by <a href={ONTEON_URL} rel="noreferrer" target="_blank" style={{color: "#8c8c8c", fontWeight: 800}}>Onteon</a>
         </p>
     </div>
 );

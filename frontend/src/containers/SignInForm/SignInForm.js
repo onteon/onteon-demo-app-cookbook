@@ -26,6 +26,7 @@ const SignInForm = () => {
                         label="Username"
                         name="username"
                         rules={[{required: true, message: 'Please input your username!'}]}
+                        labelCol={{offset: 0, span: 6}}
                     >
                         <Input name="username"/>
                     </Form.Item>
@@ -34,6 +35,7 @@ const SignInForm = () => {
                         label="Password"
                         name="password"
                         rules={[{required: true, message: 'Please input your password!'}]}
+                        labelCol={{offset: 0, span: 6}}
                     >
                         <Input.Password name="password"/>
                     </Form.Item>
@@ -42,7 +44,7 @@ const SignInForm = () => {
                         Don't have an account yet? <a href="#up">Sign Up</a>.
                     </p>
 
-                    <Form.Item wrapperCol={{offset: 8, span: 16}}>
+                    <Form.Item wrapperCol={{offset: 6, span: 18}}>
                         <Button type="primary" htmlType="submit">
                             Sign in
                         </Button>

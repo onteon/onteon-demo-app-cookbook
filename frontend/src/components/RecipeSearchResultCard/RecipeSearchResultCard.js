@@ -1,11 +1,12 @@
 import React from 'react';
-import {Button, Card, Col, Dropdown, Menu} from "antd";
-import {MenuUnfoldOutlined} from '@ant-design/icons';
+import {Card} from "antd";
+import {DeleteOutlined, EditOutlined} from '@ant-design/icons';
 import {CONTEXT_PATH} from "../../properties";
 import {deleteById} from "../../remote/RecipeRemoteService";
+import Meta from "antd/es/card/Meta";
 
 const RecipeSearchResultCard = props => {
-    const {id, title, description, deleteFunction} = props;
+    const {id, title, description, deleteFunction, imageUri} = props;
 
     function deleteRecipe(id) {
         deleteById(id)
@@ -14,46 +15,34 @@ const RecipeSearchResultCard = props => {
     }
 
     return (
-        <Col>
-            <Card
-                title={title}
-                extra={
-                    <>
-                        <Button type="link" href={`${CONTEXT_PATH}/recipe/${id}`}>
-                            Open
-                        </Button>
-                        <Dropdown
-                            overlay={
-                                <Menu>
-                                    <Menu.Item danger onClick={() => deleteRecipe(id)}>
-                                        Remove
-                                    </Menu.Item>
-                                </Menu>
-                            }
-                            trigger={['click']}
-                        >
-                            <Button
-                                type="link"
-                                className="ant-dropdown-link"
-                                onClick={e => e.preventDefault()}
-                                style={{paddingBottom: "4px"}}
-                            >
-                                <MenuUnfoldOutlined/>
-                            </Button>
-                        </Dropdown>
-                    </>
-                }
-                style={{maxWidth: 500}}
-            >
-                <div style={{
-                    height: "158px",
+        <Card
+            style={{width: "450px"}}
+            cover={
+                <a href={`${CONTEXT_PATH}/recipe/${id}`}>
+                    <div style={{
+                        width: "100%",
+                        height: "300px",
+                        backgroundImage: `url('${imageUri}')`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundPosition: "center",
+                        backgroundSize: "cover",
+                    }}/>
+                </a>
+            }
+            actions={[
+                <EditOutlined key="edit"/>,
+                <DeleteOutlined key="delete" style={{color: "#f5222d"}} onClick={() => deleteRecipe(id)}/>
+            ]}
+        >
+            <Meta
+                title={<a href={`${CONTEXT_PATH}/recipe/${id}`}>{title}</a>}
+                description={description}
+                style={{
+                    height: "156px",
                     overflow: "hidden"
-                }}>
-                    {description}
-                </div>
-            </Card>
-        </Col>
-
+                }}
+            />
+        </Card>
     );
 }
 

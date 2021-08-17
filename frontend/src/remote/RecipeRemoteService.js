@@ -16,9 +16,7 @@ export function deleteById(recipeId) {
 export function addRecipe(title, description, ingredients, directions, image) {
     const formData = new FormData();
 
-    const imageFile = document.getElementById("imageInput");
-
-    formData.append("image", imageFile.files[0]);
+    formData.append("image", image);
     formData.append('data', new Blob([JSON.stringify({
         title: title,
         description: description,
@@ -27,7 +25,6 @@ export function addRecipe(title, description, ingredients, directions, image) {
     })], {
         type: "application/json"
     }));
-
 
     return axios.post(
         `${API_BASE_URL}/api/recipe`,

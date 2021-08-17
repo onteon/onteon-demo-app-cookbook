@@ -8,11 +8,18 @@ import {getPrincipal} from "../../remote/UserRemoteService";
 import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import {addRecipe} from "../../remote/RecipeRemoteService";
 import {CONTEXT_PATH} from "../../properties";
+import BasicDataFormItemsContentCard
+    from "../../components/BasicDataFormItemsContentCard/BasicDataFromItemsContentCard";
+import IngredientsFormItemsContentCard
+    from "../../components/IngredientsFormItemsContentCard/IngredientsFormItemsContentCard";
+import DirectionsFormItemsContentCard
+    from "../../components/DirectionsFormItemsContentCard/DirectionsFormItemsContentCard";
 
 const {Content} = Layout;
 
 const AddRecipePage = () => {
     const [principal, setPrincipal] = useState();
+    const [image, setImage] = useState();
 
     useEffect(() => {
         getPrincipal()
@@ -20,7 +27,7 @@ const AddRecipePage = () => {
     }, []);
 
     function onFinishAddRecipe(data) {
-        const {title, description, ingredients, directions, image} = data;
+        const {title, description, ingredients, directions} = data;
         addRecipe(title, description, ingredients, directions, image)
             .then(response => window.open(`${CONTEXT_PATH}/recipe/${response.data.recipeId}`, "_self"))
             .catch(error => console.error(error.response))
@@ -34,121 +41,13 @@ const AddRecipePage = () => {
                     <Form name="recipeForm" onFinish={onFinishAddRecipe}>
                         <Row gutter={[24, 24]}>
                             <Col sm={12}>
-                                <ContentCard title="Basic data">
-                                    <Form.Item
-                                        label="Title"
-                                        name="title"
-                                        rules={[{required: true, message: 'Please input title!'}]}
-                                    >
-                                        <Input/>
-                                    </Form.Item>
-
-                                    <Form.Item
-                                        name="image"
-                                        label="Image"
-                                        rules={[{required: true, message: 'Please add image!'}]}
-                                    >
-                                        <input type="file" id="imageInput"/>
-                                    </Form.Item>
-
-                                    <Form.Item
-                                        name="description"
-                                        label="Description"
-                                        rules={[{required: true, message: 'Please input description!'}]}
-                                    >
-                                        <Input.TextArea/>
-                                    </Form.Item>
-                                </ContentCard>
+                                <BasicDataFormItemsContentCard image={image} setImage={setImage}/>
                             </Col>
                             <Col sm={12}>
-                                <ContentCard title="Ingredients">
-                                    <Form.List name="ingredients">
-                                        {(fields, {add, remove}, {errors}) => (
-                                            <>
-                                                {
-                                                    fields.map(field => (
-                                                        <Form.Item
-                                                            required={false}
-                                                            key={field.key}
-                                                        >
-                                                            <Form.Item
-                                                                {...field}
-                                                                validateTrigger={['onChange', 'onBlur']}
-                                                                rules={[
-                                                                    {
-                                                                        required: true,
-                                                                        whitespace: true,
-                                                                        message: "Please input ingredient",
-                                                                    },
-                                                                ]}
-                                                                noStyle
-                                                            >
-                                                                <Input placeholder="Ingredient" style={{width: '60%'}}/>
-                                                            </Form.Item>
-                                                            <MinusCircleOutlined
-                                                                className="dynamic-delete-button"
-                                                                onClick={() => remove(field.name)}
-                                                            />
-                                                        </Form.Item>
-                                                    ))
-                                                }
-                                                <Form.Item>
-                                                    <Button
-                                                        type="dashed"
-                                                        onClick={() => add()}
-                                                        style={{width: '60%'}}
-                                                        icon={<PlusOutlined/>}
-                                                    />
-                                                </Form.Item>
-                                            </>
-                                        )}
-                                    </Form.List>
-                                </ContentCard>
+                                <IngredientsFormItemsContentCard/>
                             </Col>
                             <Col sm={24}>
-                                <ContentCard title="Directions">
-                                    <Form.List name="directions">
-                                        {(fields, {add, remove}, {errors}) => (
-                                            <>
-                                                {
-                                                    fields.map(field => (
-                                                        <Form.Item
-                                                            required={false}
-                                                            key={field.key}
-                                                        >
-                                                            <Form.Item
-                                                                {...field}
-                                                                validateTrigger={['onChange', 'onBlur']}
-                                                                rules={[
-                                                                    {
-                                                                        required: true,
-                                                                        whitespace: true,
-                                                                        message: "Please input direction",
-                                                                    },
-                                                                ]}
-                                                                noStyle
-                                                            >
-                                                                <Input.TextArea placeholder="Direction" style={{width: '95%'}}/>
-                                                            </Form.Item>
-                                                            <MinusCircleOutlined
-                                                                className="dynamic-delete-button"
-                                                                onClick={() => remove(field.name)}
-                                                            />
-                                                        </Form.Item>
-                                                    ))
-                                                }
-                                                <Form.Item>
-                                                    <Button
-                                                        type="dashed"
-                                                        onClick={() => add()}
-                                                        style={{width: '100%'}}
-                                                        icon={<PlusOutlined/>}
-                                                    />
-                                                </Form.Item>
-                                            </>
-                                        )}
-                                    </Form.List>
-                                </ContentCard>
+                                <DirectionsFormItemsContentCard/>
                             </Col>
                             <Col sm={24}>
                                 <Button type="primary" htmlType="submit" style={{width: "100%"}}>

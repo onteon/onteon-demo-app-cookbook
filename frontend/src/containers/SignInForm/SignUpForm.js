@@ -29,7 +29,6 @@ const SignInForm = () => {
                     initialValues={{remember: true}}
                 >
                     <Form.ErrorList
-                        style={{color: "pink"}}
                         errors={globalErrorMessages.map(error => <p style={{color: "#f5222d"}}>{error}</p>)}
                     />
 
@@ -37,6 +36,7 @@ const SignInForm = () => {
                         label="Username"
                         name="username"
                         rules={[{required: true, message: 'Please input your username!'}]}
+                        labelCol={{offset:0, span: 9}}
                     >
                         <Input/>
                     </Form.Item>
@@ -45,6 +45,7 @@ const SignInForm = () => {
                         label="Password"
                         name="password"
                         rules={[{required: true, message: 'Please input your password!'}]}
+                        labelCol={{offset:0, span: 9}}
                     >
                         <Input.Password/>
                     </Form.Item>
@@ -53,11 +54,12 @@ const SignInForm = () => {
                         label="Confirm password"
                         name="confirmPassword"
                         rules={[{required: true, message: 'Please confirm your password!'}]}
+                        labelCol={{offset:0, span: 9}}
                     >
                         <Input.Password/>
                     </Form.Item>
 
-                    <Form.Item wrapperCol={{offset: 8, span: 16}}>
+                    <Form.Item wrapperCol={{offset: 9, span: 15}}>
                         <Button type="primary" htmlType="submit">
                             Sign up
                         </Button>

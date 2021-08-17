@@ -6,6 +6,7 @@ import Footer from "../../containers/Footer/Footer";
 import RecipeSearchResultCard from "../../components/RecipeSearchResultCard/RecipeSearchResultCard";
 import {getUserRecipes} from "../../remote/RecipeRemoteService";
 import {getPrincipal} from "../../remote/UserRemoteService";
+import {API_BASE_URL} from "../../properties";
 
 const {Content} = Layout;
 const PAGE_SIZE = 6;
@@ -35,7 +36,20 @@ const RecipesListPage = () => {
     useEffect(() => getNextPage(), []);
 
     function deleteRecipe(recipeId) {
-        setRecipes(recipes.filter(recipe => recipe.id !== recipeId));
+        if (hasMorePages) {
+            getUserRecipes(currentPage * PAGE_SIZE, 1)
+                .then(response => {
+                    const {last, content} = response.data;
+                    setHasMorePages(!last);
+                    setRecipes([...recipes, ...content].filter(recipe => recipe.id !== recipeId));
+                })
+                .catch(error => {
+                    setRecipes(recipes.filter(recipe => recipe.id !== recipeId));
+                    console.error(error.response)
+                });
+        } else {
+            setRecipes(recipes.filter(recipe => recipe.id !== recipeId));
+        }
     }
 
     return (
@@ -48,15 +62,35 @@ const RecipesListPage = () => {
                             <Row gutter={[24, 24]} justify="center">
                                 {
                                     recipes.length === 0
-                                        ? <Col sm={24}><h1>Not found recipes</h1></Col>
-                                        : recipes.map(recipe => (
-                                            <RecipeSearchResultCard
-                                                id={recipe.id}
-                                                title={recipe.title}
-                                                description={recipe.description}
-                                                key={recipe.key}
-                                                deleteFunction={deleteRecipe}
-                                            />
+                                        ?
+                                        <Col sm={24}>
+                                            <h3 style={{color: "#bfbfbf"}}>Not found recipes</h3>
+                                            <Button type="text"
+                                                    style={{
+                                                        textAlign: "center",
+                                                        width: "100%",
+                                                        fontSize: "36px",
+                                                        marginTop: "100px",
+                                                        height: "auto",
+                                                        color: "#8c8c8c"
+                                                    }}
+                                                    href={`${API_BASE_URL}/add-recipe`}
+                                            >
+                                                Add new recipe
+                                            </Button>
+                                        </Col>
+                                        :
+                                        recipes.map(recipe => (
+                                            <Col>
+                                                <RecipeSearchResultCard
+                                                    id={recipe.id}
+                                                    title={recipe.title}
+                                                    description={recipe.description}
+                                                    imageUri={recipe.imageUri}
+                                                    key={recipe.id}
+                                                    deleteFunction={deleteRecipe}
+                                                />
+                                            </Col>
                                         ))
                                 }
                             </Row>

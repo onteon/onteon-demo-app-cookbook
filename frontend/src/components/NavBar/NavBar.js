@@ -79,6 +79,8 @@ const NavBar = props => {
                         <Nav.Link
                             href={ONTEON_URL}
                             style={{width: "70px"}}
+                            target="_blank"
+                            rel="noreferrer"
                         >
                             <img src={transparent ? onteonLogoWhite : onteonLogo} alt="onteon logo"/>
                         </Nav.Link>

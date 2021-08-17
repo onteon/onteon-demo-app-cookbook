@@ -10,11 +10,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.request.AddRecipeRequest;
+import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.request.UpdateRecipeRequest;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.response.AddRecipeResponse;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.response.RecipeResponse;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.converter.RecipeConverter;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.interfaces.RecipeService;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.NewRecipeTO;
+import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.UpdateRecipeTO;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -48,6 +50,16 @@ public class RecipeController {
         final int newRecipeId = recipeService.addNewRecipe(newRecipeTO, principal);
 
         return new AddRecipeResponse(newRecipeId);
+    }
+
+    @PutMapping
+    public void updateRecipe(
+            @RequestPart(value = "image", required = false) final MultipartFile image,
+            @RequestPart("data") @Valid final UpdateRecipeRequest request,
+            final Principal principal
+    ) throws IOException {
+        final UpdateRecipeTO updateRecipeTO = recipeConverter.toUpdateRecipeTO(request, image);
+        recipeService.updateRecipe(updateRecipeTO, principal);
     }
 
     @GetMapping("/user/me")

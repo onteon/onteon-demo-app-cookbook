@@ -3,12 +3,15 @@ import {Button, Form, Input} from "antd";
 import ContentCard from "../../components/ContentCard/ContentCard";
 import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 
-const IngredientsFormItemsContentCard = () => {
+const IngredientsFormItemsContentCard = props => {
+    const {ingredients} = props;
+
 
     return (
         <ContentCard title="Ingredients">
             <Form.List
                 name="ingredients"
+                initialValue={ingredients ? ingredients : []}
                 rules={[
                     {
                         validator: async (_, ingredients) => {

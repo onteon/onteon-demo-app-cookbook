@@ -36,3 +36,30 @@ export function addRecipe(title, description, ingredients, directions, image) {
         }
     );
 }
+
+export function updateRecipe(id, title, description, ingredients, directions, image) {
+    const formData = new FormData();
+
+    if (image) {
+        formData.append("image", image);
+    }
+    formData.append('data', new Blob([JSON.stringify({
+        id: id,
+        title: title,
+        description: description,
+        ingredients: ingredients,
+        directions: directions
+    })], {
+        type: "application/json"
+    }));
+
+    return axios.put(
+        `${API_BASE_URL}/api/recipe`,
+        formData,
+        {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        }
+    );
+}

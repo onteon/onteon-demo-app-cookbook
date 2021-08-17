@@ -3,12 +3,14 @@ import {Button, Col, Form, Input, Row} from "antd";
 import ContentCard from "../../components/ContentCard/ContentCard";
 import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 
-const DirectionsFormItemsContentCard = () => {
+const DirectionsFormItemsContentCard = props => {
+    const {directions} = props;
 
     return (
         <ContentCard title="Directions">
             <Form.List
                 name="directions"
+                initialValue={directions ? directions : []}
                 rules={[
                     {
                         validator: async (_, directions) => {

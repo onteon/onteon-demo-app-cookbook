@@ -19,4 +19,6 @@ public interface ImageRepository {
      * @return Name of saved image file.
      */
     String save(@NotNull final MultipartFile image) throws IOException;
+
+    void removeByFilename(@NotNull final String filename) throws IOException;
 }

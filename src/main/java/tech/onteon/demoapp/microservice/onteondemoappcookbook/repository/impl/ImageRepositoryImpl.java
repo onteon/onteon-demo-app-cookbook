@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.interfaces.ImageRepository;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,8 +31,13 @@ public class ImageRepositoryImpl implements ImageRepository {
     @Override
     public String save(MultipartFile image) throws IOException {
         final String newImageFilename = UUID.randomUUID() + "-" + image.getOriginalFilename();
-        Files.copy(image.getInputStream(), Paths.get("images", newImageFilename));
+        Files.copy(image.getInputStream(), Paths.get(imagesDir.toString(), newImageFilename));
 
         return newImageFilename;
+    }
+
+    @Override
+    public void removeByFilename(@NotNull final String filename) throws IOException {
+        Paths.get(imagesDir.toString(), filename).toFile().delete();
     }
 }

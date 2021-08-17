@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Col, Form, Input, Layout, Row} from "antd";
+import {Button, Col, Form, Layout, Row} from "antd";
 import NavBar from "../../components/NavBar/NavBar";
-import ContentCard from "../../components/ContentCard/ContentCard";
+
 import Footer from "../../containers/Footer/Footer";
 
 import {getPrincipal} from "../../remote/UserRemoteService";
-import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import {addRecipe} from "../../remote/RecipeRemoteService";
 import {CONTEXT_PATH} from "../../properties";
 import BasicDataFormItemsContentCard

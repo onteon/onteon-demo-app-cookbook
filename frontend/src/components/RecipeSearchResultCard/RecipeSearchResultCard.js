@@ -30,7 +30,7 @@ const RecipeSearchResultCard = props => {
                 </a>
             }
             actions={[
-                <EditOutlined key="edit"/>,
+                <a href={`${CONTEXT_PATH}/edit-recipe/${id}`}><EditOutlined key="edit" style={{color: "#1890ff"}}/></a>,
                 <DeleteOutlined key="delete" style={{color: "#f5222d"}} onClick={() => deleteRecipe(id)}/>
             ]}
         >

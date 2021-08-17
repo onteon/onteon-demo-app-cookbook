@@ -9,14 +9,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.request.AddRecipeRequest;
+import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.request.UpdateRecipeRequest;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.response.RecipeResponse;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.entity.DirectionEntity;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.entity.IngredientEntity;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.entity.RecipeEntity;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.NewRecipeTO;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.RecipeTO;
+import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.UpdateRecipeTO;
 
-import javax.validation.constraints.NotNull;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -55,7 +56,7 @@ public class RecipeConverter {
                 .orElse(null);
     }
 
-    public RecipeResponse toRecipeResponse(@NotNull final RecipeTO recipeTO) {
+    public RecipeResponse toRecipeResponse(final RecipeTO recipeTO) {
         return Optional.ofNullable(recipeTO)
                 .map(v -> new RecipeResponse(
                         v.getId(),
@@ -65,6 +66,19 @@ public class RecipeConverter {
                         v.getIngredients(),
                         v.getDirections(),
                         v.getImageUri()
+                ))
+                .orElse(null);
+    }
+
+    public UpdateRecipeTO toUpdateRecipeTO(final UpdateRecipeRequest request, final MultipartFile image) {
+        return Optional.ofNullable(request)
+                .map(v -> new UpdateRecipeTO(
+                        v.getId(),
+                        v.getTitle(),
+                        v.getDescription(),
+                        v.getIngredients(),
+                        v.getDirections(),
+                        image
                 ))
                 .orElse(null);
     }

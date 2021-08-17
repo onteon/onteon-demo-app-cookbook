@@ -5,6 +5,11 @@ export function redirect(uri) {
 }
 
 export function redirectError(error) {
-    const uri = `${CONTEXT_PATH}/error-page?status=${error.response.status}&message=${error.response.data.message}`;
-    window.open(uri, "_self");
+    if (error.response) {
+        const uri = `${CONTEXT_PATH}/error-page?status=${error.response.status}&message=${error.response.data.message}`;
+        window.open(uri, "_self");
+    }
+    else {
+        redirect(`${CONTEXT_PATH}`);
+    }
 }

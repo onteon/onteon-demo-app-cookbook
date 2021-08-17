@@ -2,9 +2,12 @@ import React, {useState} from 'react';
 import {Button, Col, Form, Input, Row} from "antd";
 import {signUp} from "../../remote/UserRemoteService";
 import {redirect} from "../../utils/RedirectUtils";
+import {useMediaQuery} from "react-responsive";
 
 const SignInForm = () => {
     const [globalErrorMessages, setGlobalErrorMessages] = useState([]);
+
+    const isMd = useMediaQuery({minWidth: 768});
 
     function addNewUser(values) {
         const {username, password, confirmPassword} = values;
@@ -25,8 +28,8 @@ const SignInForm = () => {
                 <Form
                     onFinish={addNewUser}
                     name="signUpForm"
-                    labelCol={{span: 8}}
-                    wrapperCol={{span: 16}}
+                    labelCol={isMd ? {span: 8} : {}}
+                    wrapperCol={isMd ? {span: 16} : {span: 24}}
                     initialValues={{remember: true}}
                 >
                     <Form.ErrorList
@@ -34,33 +37,33 @@ const SignInForm = () => {
                     />
 
                     <Form.Item
-                        label="Username"
+                        label={isMd ? "Username" : ""}
                         name="username"
                         rules={[{required: true, message: 'Please input your username!'}]}
-                        labelCol={{offset: 0, span: 9}}
+                        labelCol={isMd ? {offset: 0, span: 9} : {}}
                     >
-                        <Input/>
+                        <Input placeholder={!isMd ? "Username" : ""}/>
                     </Form.Item>
 
                     <Form.Item
-                        label="Password"
+                        label={isMd ? "Password" : ""}
                         name="password"
                         rules={[{required: true, message: 'Please input your password!'}]}
-                        labelCol={{offset: 0, span: 9}}
+                        labelCol={isMd ? {offset: 0, span: 9} : {}}
                     >
-                        <Input.Password/>
+                        <Input.Password placeholder={!isMd ? "Password" : ""}/>
                     </Form.Item>
 
                     <Form.Item
-                        label="Confirm password"
+                        label={isMd ? "Confirm password" : ""}
                         name="confirmPassword"
                         rules={[{required: true, message: 'Please confirm your password!'}]}
-                        labelCol={{offset: 0, span: 9}}
+                        labelCol={isMd ? {offset: 0, span: 9} : {}}
                     >
-                        <Input.Password/>
+                        <Input.Password placeholder={!isMd ? "Confirm password" : ""}/>
                     </Form.Item>
 
-                    <Form.Item wrapperCol={{offset: 9, span: 15}}>
+                    <Form.Item wrapperCol={{offset: 9}}>
                         <Button type="primary" htmlType="submit">
                             Sign up
                         </Button>

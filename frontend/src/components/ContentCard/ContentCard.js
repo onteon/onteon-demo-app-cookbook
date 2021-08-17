@@ -1,9 +1,9 @@
 import React from 'react';
-import {useMediaQuery} from "react-responsive";
+import {getIsLg, getIsMd} from "../../utils/ResponsiveUtils";
 
 const ContentCard = props => {
-    const isLg = useMediaQuery({ minWidth: 992 });
-    const isMd = useMediaQuery({ minWidth: 768 });
+    const isLg = getIsLg().call();
+    const isMd = getIsMd().call();
 
     const padding = isLg ? "22px 59px 22px 59px" : isMd ? "22px 35px 22px 35px" : "22px 10px 22px 10px";
 

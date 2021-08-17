@@ -1,8 +1,10 @@
 import React from 'react';
 import {Col, Row} from "antd";
+import {getIsSm} from "../../utils/ResponsiveUtils";
 
 const ImageWithTitle = props => {
     const {imageUrl, title} = props;
+    const isSm = getIsSm().call();
 
     return (
         <Row
@@ -25,7 +27,7 @@ const ImageWithTitle = props => {
                         textAlign: "center"
                     }}
                 >
-                    <h1 style={{color: "#f0f0f0", fontSize: "60px"}}>
+                    <h1 style={{color: "#f0f0f0", fontSize: isSm ? "60px" : "40px"}}>
                         {title}
                     </h1>
                 </div>

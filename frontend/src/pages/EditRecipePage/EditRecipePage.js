@@ -14,6 +14,7 @@ import {useParams} from "react-router-dom";
 import ContentCard from "../../components/ContentCard/ContentCard";
 import {getRecipeById, updateRecipe} from "../../remote/RecipeRemoteService";
 import {redirect, redirectError} from "../../utils/RedirectUtils";
+import {useMediaQuery} from "react-responsive";
 
 const {Content} = Layout;
 
@@ -22,6 +23,9 @@ const EditRecipePage = () => {
     const [recipe, setRecipe] = useState();
     const [image, setImage] = useState();
     const {id} = useParams();
+
+    const isMd = useMediaQuery({minWidth: 768});
+    const isSm = useMediaQuery({minWidth: 576});
 
     useEffect(() => {
         getPrincipal()
@@ -43,14 +47,14 @@ const EditRecipePage = () => {
 
     return (
         <>
-            <Layout style={{padding: "0 100px", minHeight: "100vh"}}>
+            <Layout style={{padding: isMd ? "0 100px" : isSm ? "0 25px" : "0 0", minHeight: "100vh"}}>
                 <NavBar transparent={false} principal={principal}/>
                 {
                     recipe ?
                         <Content style={{marginTop: "100px"}}>
                             <Form name="recipeForm" onFinish={onFinishUpdateRecipe}>
-                                <Row gutter={[24, 24]}>
-                                    <Col sm={12}>
+                                <Row gutter={[isMd ? 24 : 0, 24]}>
+                                    <Col xs={24} lg={12}>
                                         <BasicDataFormItemsContentCard
                                             image={image}
                                             setImage={setImage}
@@ -59,13 +63,13 @@ const EditRecipePage = () => {
                                             obligatoryImage={false}
                                         />
                                     </Col>
-                                    <Col sm={12}>
+                                    <Col xs={24} lg={12}>
                                         <IngredientsFormItemsContentCard ingredients={recipe.ingredients}/>
                                     </Col>
-                                    <Col sm={24}>
+                                    <Col xs={24}>
                                         <DirectionsFormItemsContentCard directions={recipe.directions}/>
                                     </Col>
-                                    <Col sm={24}>
+                                    <Col xs={24}>
                                         <Button type="primary" htmlType="submit" style={{width: "100%"}}>
                                             Update
                                         </Button>

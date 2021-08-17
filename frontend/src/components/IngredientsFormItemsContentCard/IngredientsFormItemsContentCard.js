@@ -2,10 +2,12 @@ import React from 'react';
 import {Button, Form, Input} from "antd";
 import ContentCard from "../../components/ContentCard/ContentCard";
 import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
+import {getIsLg} from "../../utils/ResponsiveUtils";
 
 const IngredientsFormItemsContentCard = props => {
     const {ingredients} = props;
 
+    const isLg = getIsLg().call();
 
     return (
         <ContentCard title="Ingredients">
@@ -43,7 +45,7 @@ const IngredientsFormItemsContentCard = props => {
                                             ]}
                                             noStyle
                                         >
-                                            <Input placeholder="Ingredient" style={{width: '60%'}}/>
+                                            <Input placeholder="Ingredient" style={{width: isLg ? '60%' : '91.6%'}}/>
                                         </Form.Item>
                                         <MinusCircleOutlined
                                             className="dynamic-delete-button"
@@ -57,7 +59,7 @@ const IngredientsFormItemsContentCard = props => {
                                 <Button
                                     type="dashed"
                                     onClick={() => add()}
-                                    style={{width: '60%'}}
+                                    style={{width: isLg ? '60%' : '91.6%'}}
                                     icon={<PlusOutlined/>}
                                 />
                                 <Form.ErrorList errors={errors}/>

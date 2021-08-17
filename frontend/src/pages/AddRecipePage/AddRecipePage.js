@@ -13,12 +13,16 @@ import IngredientsFormItemsContentCard
 import DirectionsFormItemsContentCard
     from "../../components/DirectionsFormItemsContentCard/DirectionsFormItemsContentCard";
 import {redirect} from "../../utils/RedirectUtils";
+import {getIsMd, getIsSm} from "../../utils/ResponsiveUtils";
 
 const {Content} = Layout;
 
 const AddRecipePage = () => {
     const [principal, setPrincipal] = useState();
     const [image, setImage] = useState();
+
+    const isMd = getIsMd().call();
+    const isSm = getIsSm().call();
 
     useEffect(() => {
         getPrincipal()
@@ -34,21 +38,21 @@ const AddRecipePage = () => {
 
     return (
         <>
-            <Layout style={{padding: "0 100px", minHeight: "100vh"}}>
+            <Layout style={{padding: isMd ? "0 100px" : isSm ? "0 25px" : "0 0", minHeight: "100vh"}}>
                 <NavBar transparent={false} principal={principal}/>
                 <Content style={{marginTop: "100px"}}>
                     <Form name="recipeForm" onFinish={onFinishAddRecipe}>
-                        <Row gutter={[24, 24]}>
-                            <Col sm={12}>
+                        <Row gutter={[isMd ? 24 : 0, 24]}>
+                            <Col xs={24} lg={12}>
                                 <BasicDataFormItemsContentCard image={image} setImage={setImage}/>
                             </Col>
-                            <Col sm={12}>
+                            <Col xs={24} lg={12}>
                                 <IngredientsFormItemsContentCard/>
                             </Col>
-                            <Col sm={24}>
+                            <Col xs={24}>
                                 <DirectionsFormItemsContentCard/>
                             </Col>
-                            <Col sm={24}>
+                            <Col xs={24}>
                                 <Button type="primary" htmlType="submit" style={{width: "100%"}}>
                                     Submit
                                 </Button>

@@ -7,6 +7,7 @@ import RecipeSearchResultCard from "../../components/RecipeSearchResultCard/Reci
 import {getUserRecipes} from "../../remote/RecipeRemoteService";
 import {getPrincipal} from "../../remote/UserRemoteService";
 import {API_BASE_URL} from "../../properties";
+import {getIsLg} from "../../utils/ResponsiveUtils";
 
 const {Content} = Layout;
 const PAGE_SIZE = 6;
@@ -16,6 +17,8 @@ const RecipesListPage = () => {
     const [currentPage, setCurrentPage] = useState(0)
     const [hasMorePages, setHasMorePages] = useState(true)
     const [principal, setPrincipal] = useState();
+
+    const isLg = getIsLg().call();
 
     useEffect(() => {
         getPrincipal()
@@ -81,7 +84,7 @@ const RecipesListPage = () => {
                                         </Col>
                                         :
                                         recipes.map(recipe => (
-                                            <Col>
+                                            <Col style={isLg ? {} : {width: "100%"}}>
                                                 <RecipeSearchResultCard
                                                     id={recipe.id}
                                                     title={recipe.title}

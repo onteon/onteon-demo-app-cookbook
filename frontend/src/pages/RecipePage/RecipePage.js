@@ -11,6 +11,7 @@ import DirectionsContentCard from "../../components/DirectionsContentCard/Direct
 import {getRecipeById} from "../../remote/RecipeRemoteService";
 import {getPrincipal} from "../../remote/UserRemoteService";
 import {redirectError} from "../../utils/RedirectUtils";
+import {getIsLg} from "../../utils/ResponsiveUtils";
 
 const {Content} = Layout;
 
@@ -18,6 +19,8 @@ const RecipePage = () => {
     const {id} = useParams();
     const [recipe, setRecipe] = useState();
     const [principal, setPrincipal] = useState();
+
+    const isLg = getIsLg().call();
 
     useEffect(() => {
         getPrincipal()
@@ -32,7 +35,7 @@ const RecipePage = () => {
 
     return (
         <>
-            <Layout style={{padding: "0 100px", minHeight: "100vh"}}>
+            <Layout style={{padding: isLg ? "0 100px" : "0 0", minHeight: "100vh"}}>
                 <NavBar transparent={false} principal={principal}/>
                 <Content>
                     {
@@ -40,17 +43,17 @@ const RecipePage = () => {
                             <>
                                 <ImageWithTitle imageUrl={recipe.imageUri} title={recipe.title}/>
                                 <Row>
-                                    <Col sm={24}>
+                                    <Col xs={24}>
                                         <Row>
-                                            <Col sm={24} style={{padding: "0 24px 24px 24px"}}>
+                                            <Col xs={24} style={{padding: "0 24px 24px 24px"}}>
                                                 <DescriptionContentCard description={recipe.description}/>
                                             </Col>
                                         </Row>
-                                        <Row gutter={24} style={{padding: "24px"}}>
-                                            <Col sm={6}>
+                                        <Row gutter={[24, 24]} style={{padding: "24px"}}>
+                                            <Col xs={24} xl={10} xxl={6}>
                                                 <IngredientsContentCard ingredients={recipe.ingredients}/>
                                             </Col>
-                                            <Col sm={18}>
+                                            <Col xs={24} xl={14} xxl={18}>
                                                 <DirectionsContentCard directions={recipe.directions}/>
                                             </Col>
                                         </Row>

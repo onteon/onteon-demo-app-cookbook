@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Col, Form, Input, Row} from "antd";
 import {API_BASE_URL} from "../../properties";
+import {useMediaQuery} from "react-responsive";
 
 const SignInForm = () => {
     const [globalErrorMessages, setGlobalErrorMessages] = useState([]);
+
+    const isMd = useMediaQuery({minWidth: 768});
 
     useEffect(() => {
         const searchParams = new URL(window.location.href.replace("#in", "").replace("#up", "")).searchParams;
@@ -23,28 +26,28 @@ const SignInForm = () => {
                     />
 
                     <Form.Item
-                        label="Username"
+                        label={isMd ? "Username" : ""}
                         name="username"
                         rules={[{required: true, message: 'Please input your username!'}]}
-                        labelCol={{offset: 0, span: 6}}
+                        labelCol={isMd ? {offset: 0, span: 6} : {}}
                     >
-                        <Input name="username"/>
+                        <Input name="username" placeholder={!isMd ? "Username" : ""}/>
                     </Form.Item>
 
                     <Form.Item
-                        label="Password"
+                        label={isMd ? "Password" : ""}
                         name="password"
                         rules={[{required: true, message: 'Please input your password!'}]}
-                        labelCol={{offset: 0, span: 6}}
+                        labelCol={isMd ? {offset: 0, span: 6} : {}}
                     >
-                        <Input.Password name="password"/>
+                        <Input.Password name="password" placeholder={!isMd ? "Password" : ""}/>
                     </Form.Item>
 
                     <p>
                         Don't have an account yet? <a href="#up">Sign Up</a>.
                     </p>
 
-                    <Form.Item wrapperCol={{offset: 6, span: 18}}>
+                    <Form.Item wrapperCol={isMd ? {offset: 6} : {offset: 9}}>
                         <Button type="primary" htmlType="submit">
                             Sign in
                         </Button>

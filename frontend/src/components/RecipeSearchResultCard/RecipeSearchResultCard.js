@@ -4,9 +4,12 @@ import {DeleteOutlined, EditOutlined} from '@ant-design/icons';
 import {CONTEXT_PATH} from "../../properties";
 import {deleteById} from "../../remote/RecipeRemoteService";
 import Meta from "antd/es/card/Meta";
+import {getIsLg} from "../../utils/ResponsiveUtils";
 
 const RecipeSearchResultCard = props => {
     const {id, title, description, deleteFunction, imageUri} = props;
+
+    const isLg = getIsLg().call();
 
     function deleteRecipe(id) {
         deleteById(id)
@@ -16,7 +19,7 @@ const RecipeSearchResultCard = props => {
 
     return (
         <Card
-            style={{width: "450px"}}
+            style={{width: isLg ? "450px" : "100%"}}
             cover={
                 <a href={`${CONTEXT_PATH}/recipe/${id}`}>
                     <div style={{

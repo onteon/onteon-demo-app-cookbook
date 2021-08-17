@@ -1,12 +1,16 @@
 import React, {useRef} from 'react';
 import {Button, Form, Input} from "antd";
 import ContentCard from "../../components/ContentCard/ContentCard";
+import {getIsLg, getIsXxl} from "../../utils/ResponsiveUtils";
 
 const BasicDataFormItemsContentCard = props => {
     const {image, setImage, title, description} = props;
     const obligatoryImage = props.obligatoryImage !== undefined ? props.obligatoryImage : true;
 
-    const labelCol = {offset: 0, span: 4};
+    const isXxl = getIsXxl().call();
+    const isLg = getIsLg().call();
+
+    const labelCol = {offset: 0, span: isLg && !isXxl ? 8 : 4};
 
     const hiddenFileInput = useRef(null);
 

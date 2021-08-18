@@ -1,0 +1,18 @@
+app:
+  name: 'onteon-demo-app-cookbook'
+  version: '1.0.0'
+  processProvider:
+    name: 'JVMOsProcessProviderImpl'
+    version: '1.0.0'
+    appType: 'java'
+    executable:
+      start:
+        path: '${ont_app_path}/bin'
+        startJvmCommand: 'java -jar -Dserver.port=${ont_port_1}'
+        #successLine: 'Spring Boot properly started'
+        executableFileName: 'app.war'
+  placeHolder:
+    name: 'PlaceHolderManagerImpl'
+    version: '1.0.0'
+    filesToReplace:
+    variables:

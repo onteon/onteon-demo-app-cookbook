@@ -1,0 +1,20 @@
+app:
+  name: 'onteon-demo-app-cookbook'
+  version: '1.0.0'
+  processProvider:
+    name: 'DockerOsProcessProviderImpl'
+    version: '1.0.0'
+    #not mandatory
+    procType: 'docker'
+    appType:  'java'
+    executable:
+      start:
+        imageName: 'onteon/demo-app-cookbook:1.0.0'
+        exposedPort: '${ont_port_1}'
+        innerPort: '8080'
+        pullNewerImage: false
+  placeHolder:
+    name: 'PlaceHolderManagerImpl'
+    version: '1.0.0'
+    filesToReplace:
+    variables:

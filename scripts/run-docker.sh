@@ -1,1 +1,1 @@
-docker run -p 8080:8080 onteon/demo-app-cookbook
+docker run -p 8080:8080 onteon/demo-app-cookbook:1.0.0

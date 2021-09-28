@@ -1,5 +1,5 @@
 app:
-  name: 'onteon-demo-app-cookbook'
+  name: 'onteon-demo-app-cookbook-native'
   version: '1.0.0'
   processProvider:
     name: 'JVMOsProcessProviderImpl'

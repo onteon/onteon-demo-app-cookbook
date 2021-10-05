@@ -19,7 +19,7 @@ app:
     filesToReplace:
     variables:
   serviceRepository:
-    healthCheckUrl: 'http://${address}:${ont_port_1}/cookbook'
+    healthCheckUrl: 'http://${address}:${ont_port_1}/cookbook/'
     entities:
       - entity:
           priority: 1

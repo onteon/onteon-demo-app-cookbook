@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Service
 public class HttpFridgeRemoteServiceImpl implements FridgeRemoteService {
-    @Value("${service.fridge.baseUrl:'http://localhost:8021/_by_name/onteon-demo-app-fridge-docker'}")
+    @Value("${service.fridge.baseUrl:http://localhost:8021/_by_name/onteon-demo-app-fridge-docker}")
     private String fridgeBaseUrl;
 
     @Override

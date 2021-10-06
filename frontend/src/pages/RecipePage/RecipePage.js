@@ -12,6 +12,7 @@ import {getRecipeById} from "../../remote/RecipeRemoteService";
 import {getPrincipal} from "../../remote/UserRemoteService";
 import {redirectError} from "../../utils/RedirectUtils";
 import {getIsLg} from "../../utils/ResponsiveUtils";
+import {CONTEXT_PATH} from "../../properties";
 
 const {Content} = Layout;
 
@@ -41,7 +42,7 @@ const RecipePage = () => {
                     {
                         recipe ?
                             <>
-                                <ImageWithTitle imageUrl={recipe.imageUri} title={recipe.title}/>
+                                <ImageWithTitle imageUrl={`${CONTEXT_PATH}${recipe.imageUri}`} title={recipe.title}/>
                                 <Row>
                                     <Col xs={24}>
                                         <Row>

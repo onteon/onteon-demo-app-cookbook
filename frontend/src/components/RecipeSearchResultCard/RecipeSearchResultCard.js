@@ -25,7 +25,7 @@ const RecipeSearchResultCard = props => {
                     <div style={{
                         width: "100%",
                         height: "300px",
-                        backgroundImage: `url('${imageUri}')`,
+                        backgroundImage: `url('${CONTEXT_PATH}${imageUri}')`,
                         backgroundRepeat: "no-repeat",
                         backgroundPosition: "center",
                         backgroundSize: "cover",

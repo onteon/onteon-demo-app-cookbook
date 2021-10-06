@@ -5,7 +5,6 @@
  */
 package tech.onteon.demoapp.microservice.onteondemoappcookbook.converter;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.request.AddRecipeRequest;
@@ -27,8 +26,6 @@ import java.util.stream.Collectors;
  */
 @Component
 public class RecipeConverter {
-    @Value("${server.servlet.context-path}")
-    private String contextPath;
 
     public NewRecipeTO toNewRecipeTO(final AddRecipeRequest request, final MultipartFile image) {
         return Optional.ofNullable(request)
@@ -51,7 +48,7 @@ public class RecipeConverter {
                         v.getDescription(),
                         v.getIngredients().stream().map(IngredientEntity::getIngredient).collect(Collectors.toList()),
                         v.getDirections().stream().map(DirectionEntity::getDirection).collect(Collectors.toList()),
-                        String.format("%s/images/%s", contextPath, v.getImageFileName())
+                        String.format("/images/%s", v.getImageFileName())
                 ))
                 .orElse(null);
     }

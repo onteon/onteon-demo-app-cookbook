@@ -41,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .antMatchers("/h2-console/**")
                     .hasRole(ROLE_ADMIN.getRoleName())
-                    .antMatchers("/api/recipe", "/api/recipe/user/me", "/images/**")
+                    .antMatchers("/api/recipe", "/api/recipe/user/me", "/images/**", "/api/fridge/**")
                     .hasAnyRole(ROLE_USER.getRoleName(), ROLE_ADMIN.getRoleName())
                     .antMatchers(HttpMethod.GET, "/recipes", "/recipe/*", "/add-recipe", "/add-recipe/*")
                     .hasAnyRole(ROLE_USER.getRoleName(), ROLE_ADMIN.getRoleName())

@@ -12,6 +12,7 @@ import {CONTEXT_PATH} from "./properties";
 import AddRecipePage from "./pages/AddRecipePage/AddRecipePage";
 import EditRecipePage from "./pages/EditRecipePage/EditRecipePage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
+import MyFridgePage from "./pages/MyFridgePage/MyFridgePage";
 
 ReactDOM.render(
     <BrowserRouter>
@@ -27,6 +28,9 @@ ReactDOM.render(
             </Route>
             <Route path={`${CONTEXT_PATH}/error-page`}>
                 <ErrorPage/>
+            </Route>
+            <Route path={`${CONTEXT_PATH}/what-is-in-my-fridge`}>
+                <MyFridgePage/>
             </Route>
             <Route path={`${CONTEXT_PATH}/recipes`}>
                 <RecipesListPage/>

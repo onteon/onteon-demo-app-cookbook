@@ -54,6 +54,12 @@ const NavBar = props => {
                                         Recipes
                                     </Nav.Link>
                                     <Nav.Link
+                                        href={`${CONTEXT_PATH}/what-is-in-my-fridge`}
+                                        style={transparent ? linkStyle : {}}
+                                    >
+                                        My fridge
+                                    </Nav.Link>
+                                    <Nav.Link
                                         href={`${CONTEXT_PATH}/logout`}
                                         style={transparent ? linkStyle : {}}
                                     >

@@ -23,8 +23,7 @@ import javax.validation.constraints.NotNull;
  */
 @Service
 public class HttpShoppingListRemoteServiceImpl implements ShoppingListRemoteService {
-//    @Value("${service.shoppinglist.baseUrl:http://localhost:8021/_by_name/onteon-demo-app-fridge-docker}")
-    @Value("${service.shoppinglist.baseUrl:http://localhost:8081}")
+    @Value("${service.shoppinglist.baseUrl:http://localhost:8021/_by_name/onteon-demo-app-shopping-list-graalvm}")
     private String shoppingListBaseUrl;
     
     private final ObjectMapper objectMapper = new ObjectMapper();

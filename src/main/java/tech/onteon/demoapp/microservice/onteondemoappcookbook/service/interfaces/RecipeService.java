@@ -5,7 +5,9 @@
  */
 package tech.onteon.demoapp.microservice.onteondemoappcookbook.service.interfaces;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.data.domain.Page;
+import tech.onteon.demoapp.microservice.onteondemoappcookbook.remote.service.to.ShoppingListFileTO;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.NewRecipeTO;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.RecipeTO;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.UpdateRecipeTO;
@@ -31,4 +33,6 @@ public interface RecipeService {
     RecipeTO getRecipeById(@NotNull final Principal principal, final int recipeId);
 
     void deleteRecipeById(@NotNull final Principal principal, final int recipeId);
+
+    ShoppingListFileTO getShoppingListFile(@NotNull final Principal principal, final int recipeId) throws JsonProcessingException;
 }

@@ -5,6 +5,7 @@
  */
 package tech.onteon.demoapp.microservice.onteondemoappcookbook.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.converter.RecipeConverter;
+import tech.onteon.demoapp.microservice.onteondemoappcookbook.remote.service.interfaces.ShoppingListRemoteService;
+import tech.onteon.demoapp.microservice.onteondemoappcookbook.remote.service.request.GenerateShoppingListRequest;
+import tech.onteon.demoapp.microservice.onteondemoappcookbook.remote.service.to.ShoppingListFileTO;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.entity.DirectionEntity;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.entity.IngredientEntity;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.entity.RecipeEntity;
@@ -41,17 +45,20 @@ public class RecipeServiceImpl implements RecipeService {
     private final RecipeRepository recipeRepository;
     private final UserRepository userRepository;
     private final RecipeConverter recipeConverter;
+    private final ShoppingListRemoteService shoppingListRemoteService;
 
     public RecipeServiceImpl(
             @Autowired final ImageRepository imageRepository,
             @Autowired final RecipeRepository recipeRepository,
             @Autowired final UserRepository userRepository,
-            @Autowired final RecipeConverter recipeConverter
+            @Autowired final RecipeConverter recipeConverter,
+            @Autowired final ShoppingListRemoteService shoppingListRemoteService
     ) {
         this.imageRepository = imageRepository;
         this.recipeRepository = recipeRepository;
         this.userRepository = userRepository;
         this.recipeConverter = recipeConverter;
+        this.shoppingListRemoteService = shoppingListRemoteService;
     }
 
     @Override
@@ -211,5 +218,33 @@ public class RecipeServiceImpl implements RecipeService {
         }
 
         recipeRepository.delete(recipeEntity);
+    }
+
+    @Override
+    public ShoppingListFileTO getShoppingListFile(Principal principal, int recipeId) throws JsonProcessingException {
+        final UserEntity principalEntity = userRepository.findByUsername(principal.getName())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.UNAUTHORIZED,
+                        String.format("Not found user of username '%s'", principal.getName())
+                ));
+
+        final RecipeEntity recipeEntity = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        String.format("Not found recipe by id '%d'", recipeId)
+                ));
+
+        if (recipeEntity.getAuthor().getId() != principalEntity.getId()) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    String.format("Not a owner of recipe of id '%d'", recipeId)
+            );
+        }
+
+        final GenerateShoppingListRequest request = new GenerateShoppingListRequest(
+                recipeEntity.getTitle(),
+                recipeEntity.getIngredients().stream().map(IngredientEntity::getIngredient).collect(Collectors.toList())
+        );
+        return shoppingListRemoteService.generateShoppingListFile(request);
     }
 }

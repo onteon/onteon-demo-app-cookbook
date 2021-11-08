@@ -5,8 +5,13 @@
  */
 package tech.onteon.demoapp.microservice.onteondemoappcookbook.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.request.AddRecipeRequest;
@@ -14,6 +19,7 @@ import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.request
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.response.AddRecipeResponse;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.response.RecipeResponse;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.converter.RecipeConverter;
+import tech.onteon.demoapp.microservice.onteondemoappcookbook.remote.service.to.ShoppingListFileTO;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.interfaces.RecipeService;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.NewRecipeTO;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.UpdateRecipeTO;
@@ -75,6 +81,21 @@ public class RecipeController {
     @GetMapping("/{recipeId}")
     public RecipeResponse getRecipeById(final Principal principal, @PathVariable final int recipeId) {
         return recipeConverter.toRecipeResponse(recipeService.getRecipeById(principal, recipeId));
+    }
+
+    @GetMapping("/{recipeId}/shopping-list")
+    public ResponseEntity<byte[]> getRecipeShoppingList(
+            final Principal principal,
+            @PathVariable final int recipeId
+    ) throws JsonProcessingException {
+        final ShoppingListFileTO shoppingListFile = recipeService.getShoppingListFile(principal, recipeId);
+
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_PLAIN);
+        headers.setContentDispositionFormData(shoppingListFile.getFilename(), shoppingListFile.getFilename());
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+        return new ResponseEntity<>(shoppingListFile.getContent(), headers, HttpStatus.OK);
     }
 
     @DeleteMapping("/{recipeId}")

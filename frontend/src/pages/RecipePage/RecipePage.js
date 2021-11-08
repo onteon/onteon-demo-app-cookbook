@@ -52,7 +52,10 @@ const RecipePage = () => {
                                         </Row>
                                         <Row gutter={[24, 24]} style={{padding: "24px"}}>
                                             <Col xs={24} xl={10} xxl={6}>
-                                                <IngredientsContentCard ingredients={recipe.ingredients}/>
+                                                <IngredientsContentCard
+                                                    ingredients={recipe.ingredients}
+                                                    recipeId={recipe.id}
+                                                />
                                             </Col>
                                             <Col xs={24} xl={14} xxl={18}>
                                                 <DirectionsContentCard directions={recipe.directions}/>

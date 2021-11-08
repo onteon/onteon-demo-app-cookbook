@@ -6,21 +6,10 @@
 package tech.onteon.demoapp.microservice.onteondemoappcookbook.converter;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.request.AddRecipeRequest;
-import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.request.UpdateRecipeRequest;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.response.FridgeItemResponse;
-import tech.onteon.demoapp.microservice.onteondemoappcookbook.controller.response.RecipeResponse;
 import tech.onteon.demoapp.microservice.onteondemoappcookbook.remote.service.to.FridgeItemTO;
-import tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.entity.DirectionEntity;
-import tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.entity.IngredientEntity;
-import tech.onteon.demoapp.microservice.onteondemoappcookbook.repository.entity.RecipeEntity;
-import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.NewRecipeTO;
-import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.RecipeTO;
-import tech.onteon.demoapp.microservice.onteondemoappcookbook.service.to.UpdateRecipeTO;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author Patryk Borchowiec

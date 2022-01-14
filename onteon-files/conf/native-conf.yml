@@ -9,7 +9,7 @@ app:
     executable:
       start:
         path: '${ont_app_path}/bin'
-        startJvmCommand: 'java -jar -Dserver.servlet.session.cookie.path=/_by_name/onteon-demo-app-cookbook-native/cookbook -Dserver.port=${ont_port_1}'
+        startJvmCommand: 'java -jar -Dlog.dir=${ont_app_logs_path} -Dserver.servlet.session.cookie.path=/_by_name/onteon-demo-app-cookbook-native/cookbook -Dserver.port=${ont_port_1}'
         successLine: 'Spring Boot properly started'
         executableFileName: 'app.war'
   placeHolder:

@@ -5,6 +5,7 @@
  */
 package tech.onteon.demoapp.microservice.onteondemoappcookbook.configuration;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
@@ -18,6 +19,7 @@ import java.util.List;
  * @author Patryk Borchowiec
  * @since 0.0.0
  */
+@Log4j2
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
     @Override
@@ -43,6 +45,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
     @EventListener(ApplicationReadyEvent.class)
     public void onApplicationReady() {
-        System.out.println("Spring Boot properly started");
+        log.info("Spring Boot properly started");
     }
 }

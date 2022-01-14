@@ -7,6 +7,7 @@ package tech.onteon.demoapp.microservice.onteondemoappcookbook.configuration;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +37,7 @@ import java.util.stream.StreamSupport;
  * @author Patryk Borchowiec
  * @since 0.0.0
  */
+@Log4j2
 @Configuration
 public class DataConfiguration {
     @Value("${dummydata.users.min}")
@@ -101,9 +103,9 @@ public class DataConfiguration {
             addRecipes(user, recipesPerUserMin, recipesPerUserMax, new LinkedList<>(recipes));
         }
 
-        System.out.println("Created users");
-        users.forEach(user -> System.out.printf(
-                "Username: %s\t Password: %s\t Role: %s\n", user.getUsername(), password, user.getRole().name())
+        log.info("Created users");
+        users.forEach(user -> log.info(
+                "Username: {}  Password: {}  Role: {}", user.getUsername(), password, user.getRole().name())
         );
     }
 

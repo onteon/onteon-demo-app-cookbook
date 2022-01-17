@@ -35,13 +35,13 @@ public class UserController {
     }
 
     @PostMapping
-    private void addUser(@RequestBody @Valid final AddUserRequest request) {
+    public void addUser(@RequestBody @Valid final AddUserRequest request) {
         final NewUserTO newUserTO = userConverter.toNewUserTO(request);
         userService.saveUser(newUserTO);
     }
 
     @GetMapping("/me")
-    private UserResponse getPrincipal(final Principal principal) {
+    public UserResponse getPrincipal(final Principal principal) {
         return userConverter.toUserResponse(userService.getPrincipal(principal));
     }
 }
